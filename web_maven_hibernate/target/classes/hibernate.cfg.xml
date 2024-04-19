@@ -19,7 +19,7 @@
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.format_sql">true</property>
 		<property name="hibernate.hbm2ddl.auto">update</property>
-	<!-- 	<mapping class="pojos.Team"/>
-		<mapping class="pojos.Player"/> -->
+		<mapping class="pojos.Team"/>
+		<mapping class="pojos.Player"/>
 	</session-factory>
 </hibernate-configuration>

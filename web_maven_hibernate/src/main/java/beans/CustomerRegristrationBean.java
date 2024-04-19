@@ -1,56 +1,36 @@
-package pojos;
+package beans;
 
 import java.time.LocalDate;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import pojos.Account;
+import pojos.Customer;
+import pojos.Gender;
+import utils.HibernateUtils;
 
-@Entity
-@Table(name = "customers")
-public class Customer extends BaseEntity{
-	
-	@Column(length = 25, nullable = false)
+public class CustomerRegristrationBean {
 	private String firstName;
-	@Column(length = 25, nullable = false)
 	private String lastName;
-	
-//	@OneToMany(mappedBy = )
-//	private Account accountNo;
-	@Column(length = 20, nullable = false)
+	private Account accountNo;
 	private String password;
-	@Column(length = 10)
 	private String mobileNumber;
-	
-	@Column(length=11)
 	private String phoneNumber;
-	@Column(length = 30, nullable = false)
 	private String email;
-	
-	@Enumerated(EnumType.STRING)
 	private Gender gender;
-	
-	
 	private LocalDate dateOfBirth;
-	@Column(length = 200)
 	private String address;
-	@Column(length = 12)
 	private String aadharCardNumber;
-	@Column(length = 10)
 	private String panCardNumber;
-	@Column(length = 16)
 	private String drivingLicenseNumber;
-	@Column(length = 12)
 	private String passportNumber;
-	@Column(length = 15)
 	private String electionNumber;
+	
+	
+	
+	public CustomerRegristrationBean() {
+	}
 	public String getFirstName() {
 		return firstName;
 	}
@@ -62,6 +42,12 @@ public class Customer extends BaseEntity{
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	public Account getAccountNo() {
+		return accountNo;
+	}
+	public void setAccountNo(Account accountNo) {
+		this.accountNo = accountNo;
 	}
 	public String getPassword() {
 		return password;
@@ -135,8 +121,31 @@ public class Customer extends BaseEntity{
 	public void setElectionNumber(String electionNumber) {
 		this.electionNumber = electionNumber;
 	}
-	
-	
-	
+	public void registerCandidate()
+	{
+		Session session=HibernateUtils.getFactory().getCurrentSession();
+		Transaction tx=session.beginTransaction();
+		try {
+			Customer customer=new Customer();
+			customer.setFirstName(firstName);
+			customer.setLastName(lastName);
+			customer.setMobileNumber(mobileNumber);
+			customer.setPhoneNumber(phoneNumber);
+			customer.setAddress(address);
+			customer.setDateOfBirth(dateOfBirth);
+			customer.setDrivingLicenseNumber(drivingLicenseNumber);
+			customer.setElectionNumber(electionNumber);
+			customer.setEmail(email);
+			customer.setDrivingLicenseNumber(drivingLicenseNumber);
+			customer.setGender(gender);
+			System.out.println("Regristration Successful");
+			session.save(customer);
+			
+			tx.commit();
+		}catch (Exception e) {
+			System.out.println("Regristration not Successful");
+			tx.rollback();
+		}
+	}
 
 }

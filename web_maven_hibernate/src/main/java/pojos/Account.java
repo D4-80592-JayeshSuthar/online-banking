@@ -11,7 +11,7 @@ import javax.persistence.Transient;
 public class Account extends BaseEntity{
 	
 	private Double balance;
-	private AccountType accountType;
+//	private AccountType accountType;
 	private Long minimumBalance;
 	
 	
@@ -19,10 +19,5 @@ public class Account extends BaseEntity{
 	private Double savingAccountInterestRate;
 	
 	@Transient
-	private Double currentAccountInterestRate;
-	
-	
-	
-	
-	
+	private Double currentAccountInterestRate;	
 }
